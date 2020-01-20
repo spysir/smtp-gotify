@@ -214,7 +214,8 @@ func FormatEmail(e *mail.Envelope,
 	reader := e.NewReader()
 	env, err := enmime.ReadEnvelope(reader)
 	if err != nil {
-		return fmt.Sprintf("%s\n\nError occurred during email parsing: %s", e, err)
+		return fmt.Sprintf("smtp-gotify: Could not parse email"),
+			fmt.Sprintf("%s\n\nError occurred during email parsing: %s", e, err)
 	}
 	text := env.Text
 	if text == "" {
