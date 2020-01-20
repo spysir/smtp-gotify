@@ -59,11 +59,11 @@ func main() {
 			smtpPrimaryHost: c.String("smtp-primary-host"),
 		}
 		gotifyConfig := &GofityConfig{
-			gotifyPriority:   c.String("gotify-priority"),
+			gotifyPriority:  c.String("gotify-priority"),
 			gotifyAPIToken:  c.String("gotify-api-token"),
-			gotifyURL: c.String("gotify-url"),
+			gotifyURL:       c.String("gotify-url"),
 			titleTemplate:   c.String("title-template"),
-			messageTemplate:   c.String("message-template"),
+			messageTemplate: c.String("message-template"),
 		}
 		d, err := SmtpStart(smtpConfig, gotifyConfig)
 		if err != nil {
@@ -188,8 +188,8 @@ func SendEmailToGotify(e *mail.Envelope,
 			gotifyConfig.gotifyAPIToken,
 		),
 		url.Values{
-			"title": {title},
-			"message": {message},
+			"title":    {title},
+			"message":  {message},
 			"priority": {gotifyConfig.gotifyPriority},
 		},
 	)
@@ -210,7 +210,7 @@ func SendEmailToGotify(e *mail.Envelope,
 
 func FormatEmail(e *mail.Envelope,
 	titleTemplate string, messageTemplate string) (string, string) {
-	
+
 	reader := e.NewReader()
 	env, err := enmime.ReadEnvelope(reader)
 	if err != nil {
