@@ -176,34 +176,37 @@ func SendEmailToGotify(e *mail.Envelope,
 	title, message := FormatEmail(e,
 		gotifyConfig.titleTemplate, gotifyConfig.messageTemplate)
 
-	// Apparently the native golang's http client supports
-	// http, https and socks5 proxies via HTTP_PROXY/HTTPS_PROXY env vars
-	// out of the box.
-	//
-	// See: https://golang.org/pkg/net/http/#ProxyFromEnvironment
-	resp, err := http.PostForm(
-		fmt.Sprintf(
-			"%smessage?token=%s",
-			gotifyConfig.gotifyURL,
-			gotifyConfig.gotifyAPIToken,
-		),
-		url.Values{
-			"title":    {title},
-			"message":  {message},
-			"priority": {gotifyConfig.gotifyPriority},
-		},
-	)
+	for _, appToken := range strings.Split(gotifyConfig.gotifyAPIToken, ",") {
 
-	if err != nil {
-		return errors.New(SanitizeBotToken(err.Error(), gotifyConfig.gotifyAPIToken))
-	}
-	if resp.StatusCode != 200 {
-		body, _ := ioutil.ReadAll(resp.Body)
-		return errors.New(fmt.Sprintf(
-			"Non-200 response from Gotify Server: (%d) %s",
-			resp.StatusCode,
-			SanitizeBotToken(EscapeMultiLine(body), gotifyConfig.gotifyAPIToken),
-		))
+		// Apparently the native golang's http client supports
+		// http, https and socks5 proxies via HTTP_PROXY/HTTPS_PROXY env vars
+		// out of the box.
+		//
+		// See: https://golang.org/pkg/net/http/#ProxyFromEnvironment
+		resp, err := http.PostForm(
+			fmt.Sprintf(
+				"%smessage?token=%s",
+				gotifyConfig.gotifyURL,
+				appToken,
+			),
+			url.Values{
+				"title":    {title},
+				"message":  {message},
+				"priority": {gotifyConfig.gotifyPriority},
+			},
+		)
+
+		if err != nil {
+			return errors.New(SanitizeBotToken(err.Error(), appToken))
+		}
+		if resp.StatusCode != 200 {
+			body, _ := ioutil.ReadAll(resp.Body)
+			return errors.New(fmt.Sprintf(
+				"Non-200 response from Gotify Server: (%d) %s",
+				resp.StatusCode,
+				SanitizeBotToken(EscapeMultiLine(body), appToken),
+			))
+		}
 	}
 	return nil
 }

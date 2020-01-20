@@ -16,10 +16,12 @@ Starting a docker container:
 docker run \
     --name smtp-gotify \
     -e GOTIFY_URL=<SERVER_URL> \
-    -e GOTIFY_TOKEN=<APP_TOKEN> \
+    -e GOTIFY_TOKEN=<APP_TOKEN1>,<APP_TOKEN2> \
     -p 2525:2525 \
     piedelivery/smtp-gotify
 ```
+
+The variable `GOTIFY_URL` should be in the form `http[s]://example.com[:port]/'.
 
 A few other environmental variables that can be optionally specified:
 `GOTIFY_PRIORITY`, `GOTIFY_TITLE_TEMPLATE`, and `GOTIFY_MESSAGE_TEMPLATE`.
