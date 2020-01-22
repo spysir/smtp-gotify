@@ -21,7 +21,7 @@ docker run \
     piedelivery/smtp-gotify
 ```
 
-The variable `GOTIFY_URL` should be in the form `http[s]://example.com[:port]/'.
+The variable `GOTIFY_URL` should be in the form `http[s]://example.com[:port]/`.
 
 A few other environmental variables that can be optionally specified:
 `GOTIFY_PRIORITY`, `GOTIFY_TITLE_TEMPLATE`, and `GOTIFY_MESSAGE_TEMPLATE`.
