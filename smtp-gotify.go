@@ -8,7 +8,7 @@ import (
 	"github.com/flashmob/go-guerrilla/log"
 	"github.com/flashmob/go-guerrilla/mail"
 	"github.com/jhillyerd/enmime"
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -73,45 +73,45 @@ func main() {
 		return nil
 	}
 	app.Flags = []cli.Flag{
-		cli.StringFlag{
-			Name:   "smtp-listen",
-			Value:  "127.0.0.1:2525",
-			Usage:  "SMTP: TCP address to listen to",
-			EnvVar: "SG_SMTP_LISTEN",
+		&cli.StringFlag{
+			Name:    "smtp-listen",
+			Value:   "127.0.0.1:2525",
+			Usage:   "SMTP: TCP address to listen to",
+			EnvVars: []string{"SG_SMTP_LISTEN"},
 		},
-		cli.StringFlag{
-			Name:   "smtp-primary-host",
-			Value:  GetHostname(),
-			Usage:  "SMTP: primary host",
-			EnvVar: "SG_SMTP_PRIMARY_HOST",
+		&cli.StringFlag{
+			Name:    "smtp-primary-host",
+			Value:   GetHostname(),
+			Usage:   "SMTP: primary host",
+			EnvVars: []string{"SG_SMTP_PRIMARY_HOST"},
 		},
-		cli.StringFlag{
-			Name:   "gotify-priority",
-			Value:  "5",
-			Usage:  "Gotify message priority",
-			EnvVar: "GOFITY_PRIORITY",
+		&cli.StringFlag{
+			Name:    "gotify-priority",
+			Value:   "5",
+			Usage:   "Gotify message priority",
+			EnvVars: []string{"GOFITY_PRIORITY"},
 		},
-		cli.StringFlag{
-			Name:   "gotify-api-token",
-			Usage:  "Gotify API token",
-			EnvVar: "GOTIFY_TOKEN",
+		&cli.StringFlag{
+			Name:    "gotify-api-token",
+			Usage:   "Gotify API token",
+			EnvVars: []string{"GOTIFY_TOKEN"},
 		},
-		cli.StringFlag{
-			Name:   "gotify-url",
-			Usage:  "Gotify server URL",
-			EnvVar: "GOTIFY_URL",
+		&cli.StringFlag{
+			Name:    "gotify-url",
+			Usage:   "Gotify server URL",
+			EnvVars: []string{"GOTIFY_URL"},
 		},
-		cli.StringFlag{
-			Name:   "title-template",
-			Usage:  "Gotify notification title template",
-			Value:  "{subject}",
-			EnvVar: "GOTIFY_TITLE_TEMPLATE",
+		&cli.StringFlag{
+			Name:    "title-template",
+			Usage:   "Gotify notification title template",
+			Value:   "{subject}",
+			EnvVars: []string{"GOTIFY_TITLE_TEMPLATE"},
 		},
-		cli.StringFlag{
-			Name:   "message-template",
-			Usage:  "Gotify notification message template",
-			Value:  "{body}",
-			EnvVar: "GOTIFY_MESSAGE_TEMPLATE",
+		&cli.StringFlag{
+			Name:    "message-template",
+			Usage:   "Gotify notification message template",
+			Value:   "{body}",
+			EnvVars: []string{"GOTIFY_MESSAGE_TEMPLATE"},
 		},
 	}
 	err := app.Run(os.Args)
