@@ -17,6 +17,8 @@ docker run \
     --name smtp-gotify \
     -e GOTIFY_URL=<SERVER_URL> \
     -e GOTIFY_TOKEN=<APP_TOKEN1>,<APP_TOKEN2> \
+    -e GOTIFY_PRIORITY=8 \
+    -e GOTIFY_TITLE_TEMPLATE=smtp server \
     -p 2525:2525 \
     piedelivery/smtp-gotify
 ```
